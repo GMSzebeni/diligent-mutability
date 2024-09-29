@@ -34,8 +34,8 @@
  * @returns The modified dog object.
  */
 export function celebrateTheOwnersBirthday(dog) {
-  dog.owner.age++
-  return dog
+  const copiedDog = {...dog, owner: {...dog.owner, age:dog.owner.age + 1}}
+  return copiedDog;
 }
 
 /**
@@ -56,8 +56,8 @@ export function celebrateTheOwnersBirthday(dog) {
  * @param {string} newColor 
  */
 export function paintTheDogPartly(dog, newColor) {
-  dog.colors.push(newColor);
-  return dog;
+  const newDog = {...dog, colors: [...dog.colors, newColor]}
+  return newDog;
 }
 
 /**
@@ -71,8 +71,17 @@ export function paintTheDogPartly(dog, newColor) {
  * @returns the modified cart
  */
 export function increaseItemQuantity(cart, index) {
-  cart[index].quantity++;
-  return cart;
+  if (cart.length - 1 < index) {
+    throw new Error('Cannot read properties of undefined');
+  }
+  const newCart = cart.map((item, currentIndex) => {
+    if (currentIndex === index) {
+      return {...item, quantity: item.quantity + 1}
+    } else {
+      return item;
+    }
+  })
+  return newCart;
 }
 
 /**
@@ -90,9 +99,14 @@ export function renameItem(cart, index, newName) {
   if(index >= cart.length) {
     throw new Error('Invalid index, the cart has not enough items.');
   }
-
-  cart[index].name = newName;
-  return cart;
+  const newCart = cart.map((item, currentIndex) => {
+    if (currentIndex === index) {
+      return { ...item, name: newName };
+    } else {
+      return item;
+    }
+  })
+  return newCart;
 }
 
 /**
@@ -113,8 +127,12 @@ export function applyDiscount(cart, index, discount) {
     throw new Error('Invalid index, the cart has not enough items.');
   }
 
-  const item = cart[index]; 
-  const newPrice = item.price * (1 - (discount / 100));
-  item.price = newPrice;
-  return cart;
+  const newCart = cart.map((item, currentIndex) => {
+    if(currentIndex === index) {
+      return { ...item, price: item.price - (item.price * discount / 100)}
+    } else {
+      return item;
+    }
+  })
+  return newCart;
 }
