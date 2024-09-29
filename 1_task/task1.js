@@ -13,6 +13,8 @@
  * - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/with
  */
 
+import { log } from "console";
+
 
 /**
  * Make a person one year older.
@@ -21,8 +23,7 @@
  * @returns a person with a modified age
  */
 export function celebrateBirthday(person) {
-  person.age++
-  return person;
+  return {...person, age: person.age + 1};
 }
 
 /**
@@ -33,8 +34,7 @@ export function celebrateBirthday(person) {
  * @returns a person with a modified name.
  */
 export function getMarried(person, newName) {
-  person.name = newName
-  return person;
+  return {...person, name: newName};
 }
 
 /**
@@ -46,8 +46,7 @@ export function getMarried(person, newName) {
  * @returns the house with the new color
  */
 export function paintHouse(house, newColor) {
-  house.color = newColor;
-  return house;
+  return {...house, color: newColor};
 }
 
 /**
@@ -59,8 +58,7 @@ export function paintHouse(house, newColor) {
  * @returns The new queue.
  */
 export function goToSecurityCheck(queue, me) {
-  queue.push(me);
-  return queue;
+  return [...queue, me];
 }
 
 /**
@@ -72,8 +70,7 @@ export function goToSecurityCheck(queue, me) {
  * @returns The new queue.
  */
 export function applyFastLane(queue, me) {
-  queue.unshift(me);
-  return queue;
+  return [me, ...queue];
 }
 
 /**
@@ -89,8 +86,9 @@ export function doSecretAgentThing(queue, me, position) {
   if(position >= queue.length) {
     throw new Error('Invalid position, the queue is too short.');
   }
-  queue[position] = me;
-  return queue;
+  const newQueue = [...queue];
+  newQueue[position] = me;
+  return newQueue;
 }
 
 /**
@@ -105,6 +103,6 @@ export function doPoliceIntervention(queue, position) {
   if(position >= queue.length) {
     throw new Error('Invalid position, the queue is too short.');
   }
-  queue.splice(position, 1);
-  return queue;
+
+  return queue.slice(0, position).concat(queue.slice(position + 1));
 }
