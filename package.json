@@ -11,8 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "diligent-academy-javascript1-mutability": "file:",
     "immer": "^10.1.1",
-    "jest": "^29.7.0",
     "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
